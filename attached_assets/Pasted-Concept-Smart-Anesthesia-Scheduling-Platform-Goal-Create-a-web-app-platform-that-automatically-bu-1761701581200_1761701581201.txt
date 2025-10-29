@@ -1,0 +1,75 @@
+Concept: Smart Anesthesia Scheduling Platform
+
+Goal:
+Create a web/app platform that automatically builds fair, preference-aware anesthesia schedules for hospitals and surgery centers—like a smarter, anesthesia-specific version of QGenda.
+
+⸻
+
+🏥 What It Does
+    •    Hospital enters shift needs (example: “Winnie Palmer – 2 OB CRNAs, 1 call shift”).
+    •    Providers have stored info: skills, site credentials, PTO, preferences, and hours goals.
+    •    The system’s scheduling engine (Python + Google OR-Tools) matches people to shifts automatically while respecting:
+    •    Credentials (only OB-cleared at OB sites)
+    •    PTO & rest rules
+    •    Fairness (balanced calls, weekends, hours)
+    •    Personal preferences (site, shift, days)
+    •    Generates a complete weekly or monthly schedule in seconds.
+
+⸻
+
+⚙️ Core Components
+
+1. Web/App Dashboard
+    •    Admin view: upload hospital needs, set rules, run schedule.
+    •    Provider view: see shifts, edit preferences, request PTO.
+    •    Calendar layout for drag-drop edits and fairness analytics.
+
+2. Scheduling Engine
+    •    Python backend using OR-Tools to run constraint optimization.
+    •    Takes JSON inputs (providers + shifts + rules) → returns assignments + explanations.
+    •    Example output:
+    •    Daniel Novak → Winnie OB Day 9/10 ✅ (OB credential + site preference + fair hours)
+
+3. Database (or simple JSON for prototype)
+Stores:
+    •    Provider profiles (skills, credentials, PTO)
+    •    Shift templates (sites, hours, type)
+    •    Rules/weights (fairness, rest hours)
+    •    Schedule results (assignments, scores)
+
+⸻
+
+🖥️ What the Prototype Should Do
+    1.    Upload or enter sample data
+    •    A few providers and 1-2 hospitals.
+    •    Shifts for one week.
+    2.    Click “Generate Schedule”
+    •    Backend runs the OR-Tools script.
+    •    Returns optimized assignments.
+    3.    Display the results
+    •    Table or calendar view.
+    •    Show “why assigned” tooltips (e.g., matched preference, balanced hours).
+    4.    Export / Save
+    •    Download CSV or PDF.
+    •    Option to “re-run” after a manual edit.
+
+⸻
+
+🚀 Phase-1 Feature Scope (MVP)
+
+✅ Coverage and credential checks
+✅ PTO & rest rules
+✅ Hours fairness target
+✅ Preference weighting (prefer/avoid site or shift)
+✅ One shift per day per provider
+✅ Simple UI + CSV export
+
+⸻
+
+🔮 Next Steps After MVP
+    •    Weekend/call/holiday fairness
+    •    Post-call automatic blocks
+    •    Commute distance weighting
+    •    Locking/pinning assignments
+    •    Incremental re-solve for call-outs
+    •    Mobile provider view + iCal sync
