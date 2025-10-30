@@ -109,3 +109,8 @@ class DataManager:
                         'required_credentials': required_creds,
                         'hours': hours
                     })
+        
+        # Assign providers to shifts in a round-robin fashion for demo
+        for i, shift in enumerate(self.shifts):
+            provider = self.providers[i % len(self.providers)]['name']
+            shift['provider'] = provider
