@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: cloud-data-api
+    env: python
+    region: oregon
+    plan: free  # Change to 'starter' or 'standard' if needed
+    branch: main
+    autoDeploy: true
+
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api:app --host 0.0.0.0 --port 10000
+
+    envVars:
+      - key: ENV
+        value: production
+      - key: PYTHONUNBUFFERED
+        value: "1"
