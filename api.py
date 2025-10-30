@@ -33,11 +33,31 @@ def get_shifts(month: int, year: int, user: List[str] = Query(None)) -> Dict[str
     for shift in data_manager.shifts:
         try:
             shift_date = datetime.strptime(shift['date'], "%Y-%m-%d")
+            shift_start_time = shift.get('start_time', "00:00")
+            shift_end_time = shift.get('end_time', "00:00")
         except Exception:
             continue
         if shift_date.month == month and shift_date.year == year:
+            # Add start_time and end_time to each shift if not present (for backward compatibility)
+            if 'start_time' not in shift or 'end_time' not in shift:
+                # Example logic: assign based on shift_type
+                shift_type = shift.get('shift_type', '').lower()
+                if shift_type == 'day':
+                    shift['start_time'] = '07:00'
+                    shift['end_time'] = '15:00'
+                elif shift_type == 'evening':
+                    shift['start_time'] = '15:00'
+                    shift['end_time'] = '23:00'
+                elif shift_type == 'night':
+                    shift['start_time'] = '23:00'
+                    shift['end_time'] = '07:00'
+                elif shift_type == 'call':
+                    shift['start_time'] = '17:00'
+                    shift['end_time'] = '07:00'
+                else:
+                    shift['start_time'] = '08:00'
+                    shift['end_time'] = '16:00'
             if user:
-                # Only include shifts with a 'provider' key matching one of the users
                 if 'provider' in shift and shift['provider'] in user:
                     result.setdefault(shift['date'], []).append(shift)
             else:

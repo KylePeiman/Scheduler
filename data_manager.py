@@ -90,12 +90,20 @@ class DataManager:
                 for shift_type in shift_types:
                     if shift_type == 'Day':
                         hours = 8
+                        start_time = "08:00"
+                        end_time = "16:00"
                     elif shift_type == 'Evening':
                         hours = 8
+                        start_time = "16:00"
+                        end_time = "00:00"
                     elif shift_type == 'Night':
                         hours = 10
+                        start_time = "00:00"
+                        end_time = "10:00"
                     elif shift_type == 'Call':
                         hours = 12
+                        start_time = "00:00"
+                        end_time = "12:00"
                     else:
                         hours = 8
                     
@@ -104,6 +112,8 @@ class DataManager:
                     
                     self.shifts.append({
                         'date': date_str,
+                        'start_time': start_time,
+                        'end_time': end_time,
                         'site': site,
                         'shift_type': shift_type,
                         'required_credentials': required_creds,
