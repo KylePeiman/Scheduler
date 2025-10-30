@@ -71,7 +71,7 @@
             function pad(n) { return n < 10 ? '0' + n : n; }
 
             async function fetchProviders() {
-                const res = await fetch('http://127.0.0.1:8000/providers');
+                const res = await fetch('https://scheduler-ro9c.onrender.com');
                 providers = await res.json();
                 userSelect.innerHTML = '';
                 providers.forEach((p, i) => {
