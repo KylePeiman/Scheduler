@@ -71,7 +71,7 @@
             function pad(n) { return n < 10 ? '0' + n : n; }
 
             async function fetchProviders() {
-                const res = await fetch('https://scheduler-ro9c.onrender.com');
+                const res = await fetch('https://scheduler-ro9c.onrender.com/providers');
                 providers = await res.json();
                 userSelect.innerHTML = '';
                 providers.forEach((p, i) => {
@@ -85,7 +85,7 @@
             async function fetchShifts(month, year, userNames) {
                 const params = new URLSearchParams({ month: month+1, year });
                 userNames.forEach(u => params.append('user', u));
-                const res = await fetch(`http://127.0.0.1:8000/shifts?${params}`);
+                const res = await fetch(`https://scheduler-ro9c.onrender.com/shifts?${params}`);
                 if (!res.ok) return {};
                 return await res.json();
             }
